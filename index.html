@@ -1,405 +1,202 @@
 <!DOCTYPE html>
-
 <html>
-	
 	<head>
-		
 		<meta charset="UTF-8"/>
-		
 		<title>HTML Calc</title>
-			
 		<style>
-	
 			*{
-			
 				margin: 0PX;
-			
 				padding: 0PX;
-				
 				padding-left: 10px;
-			
 				-webkit-box-sizing: border-box;
-			
 				-moz-box-sizing: border-box;
-			
 				box-sizing: border-box;
-			
 				font:bold 14px Aria,sans-serif;
-			
 			}
-		
 			html {
-			
 				height: 100%;
-			
 				background: white;
-			
 				background: radial-gradient(circle, #fff 20%, #ccc);
-			
 				background-size: cover;
-			
 			}
-			
 			h1 {
-				
 				font-family: sans-serif, monospace;
-				
 				text-align: center;
-				
 				font-size: 40px;
-				
 				padding-top: 40px;
-				
 				text-shadow: 15px 15px 18px #300000;
-				
 			}
-			
-		
 		#calc {
-		
 			width: 325px;
-		
 			height: auto;
-			
 			margin: 80px auto;
-		
 			padding: 14px 15px 9px;
-		
 			background: #9dd2ea;
-		
 			background: linear-gradient(#9dd2ea, #8bceec);
-		
 			border-radius: 3px;
-		
 			box-shadow: 0px 4px #009de4, 0px 10px 15px rgba(0,0,0,0.2);
-		
 		}
-	
 		#Screen {
-		
 			float: right;
-		
 			height: 40px;
-		
 			width: 212px;
-		
 			padding: 0 10px;
-		
 			background: rgba(0, 0, 0, 0.2);
-		
 			border-radius: 3px;
-		
 			box-shadow: inset 0px 4px rgba(0, 0, 0, 0.2);
-		
 			font-size: 17px;
-		
 			line-height: 40px;
-		
 			color: white;
-		
 			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-		
 			text-align: right;
-		
 			letter-spacing: 1px;
-		
 		}
-	
 		.Keys, .Top {
-		
 			overflow: hidden;
-		
 		}
-	
 		.Keys span, #Clear {
-		
 			float: left;
-		
 			position: relative;
-		
 			top: 0;
-		
 			cursor: pointer;
-			
 			width: 66px;
-		
 			height: 36px;
-		
 			background: white;
-		
 			border-radius: 3px;
-		
 			box-shadow: 0px 4px rgba(0, 0, 0, 0.2);
-		
 			margin: 0 7px 11px 0;
-		
 			color: #888;
-		
 			line-height: 36px;
-		
 			text-align: center;
-		
 			user-select: none;
-		
 			transition: all 0.2s ease;
-		
 		}
-	
 		.Keys span.Operator {
-		
 			background: #FFF0F5;
-		
 			margin-right: 0;
-		
 		}
-	
 		.Keys span.eval {
-		
 			background: #f1ff92;
-		
 			box-shadow: 0px 4px #9da853;
-		
 			color: #888e5f;
-		
 		}
-	
 		.Keys span.eval:hover {
-		
 			background: #abb850;
-		
 			box-shadow: 0px 4px #717a33;
-		
 			color: #ffffff;
-		
 		}
-	
 		.Keys span.eval:active {
-		
 			box-shadow: 0px 0px #717a33;
-		
 			top: 4px;
-		
 		}
-	
 		#Clear {
-		
 			background: #ff9fa8;
-		
 			box-shadow: 0px 4px #ff7c87;
-		
 			color: white;
-		
 		}
-		
 		#Clear:hover {
-		
 			background: #f68991;
-		
 			box-shadow: 0px 4px #d3545d;
-		
 			color: white;
-		
 		}
-	
 		#Clear:active {
-		
 			top: 4px;
-		
 			box-shadow: 0px 0px #d3545d;
-		
 		}
-	
 		.Keys span:hover {
-		
 			background: #9c89f6;
-		
 			box-shadow: 0px 4px #6b54d3;
-		
 			color: white;
-		
 		}
-	
 		.Keys span:active {
-		
 			box-shadow: 0px 0px #6b54d3;
-		
 			top: 4px;
-		
 		}
-	
 	</style>
-	
 	</head>
-	
 	<body onload="load()">
-		
 		<h1>
-			
 			HTML Calc
-		
 		</h1>
-		
 		<div id="calc">
-			
 			<div class="Top">
-				
 				<span id="Clear">C</span>
-				
 				<div id="Screen"></div>
-				
 				</div>
-				
 			<div class="Keys">
-				
-				
 				<span>7</span>
-				
 				<span>8</span>
-				
 				<span>9</span>
-				
 				<span class="Operator">+</span>
-				
 				<span>4</span>
-				
 				<span>5</span>
-				
 				<span>6</span>
-				
 				<span class="Operator">-</span>
-				
 				<span>1</span>
-				
 				<span>2</span>
-				
 				<span>3</span>
-				
 				<span class="Operator">÷</span>
-				
 				<span>0</span>
-				
 				<span>.</span>
-				
 				<span class="eval">=</span>
-				
 				<span class="Operator">x</span>
-				
 				</div>
-				
 			</div>
-			
 	<script>
-	
 	function load() {
-		
 		var btns = document.querySelectorAll('#calc span');
-		
 		var operators = ['+', '-', 'x', '÷'];
-		
 		var inputScreen = document.querySelector('#Screen');
-		
 		var btnValue;
-		
 		var input;
-		
 		for(var i=0; i< btns.length; i++) {
-			
 			var decimalAdded = false;
-			
 			btns[i].addEventListener('click', function () {
-				
 				btnValue = this.innerHTML;
-				
 				input = inputScreen.innerHTML;
-				
 				switch (btnValue) {
-					
 					case 'C':
-					
 					inputScreen.innerHTML = '';
-					
 					decimalAdded = false;
-					
 					break;
-					
 					case '=':
-					
 					var lastChar = input[input.length - 1];
-					
 					input = input.replace(/x/g, '*').replace(/÷/g, '/');
-					
 					if(operators.indexOf(lastChar) > -1 || lastChar == '.')
-					
 					input = input.replace(/.$/, '');
-					
 					if(input) {
-						
 						inputScreen.innerHTML = eval(input);
-						
 					}
-					
 					decimalAdded = false;
-					
 					break;
-					
 					case '.':
-					
 					if(!decimalAdded) {
-						
 						inputScreen.innerHTML += btnValue;
-						
 						decimalAdded = true;
-					
 					}
-					
 					break;
-					
 					case '+':
-					
 					case '-':
-					
 					case 'x':
-					
 					case '÷':
-					
 					var lastChar = input[input.length - 1];
-					
 					if(input != '' && operators.indexOf(lastChar) == -1)
-					
 					inputScreen.innerHTML += btnValue;
-					
 					else if(input == '' && btnValue == '-')
-					
 					inputScreen.innerHTML += btnValue;
-					
 					if(operators.indexOf(lastChar) > -1 && input.length > 1) {
-						
 						inputScreen.innerHTML = input.replace(/.$/, btnValue);
-						
 					}
-					
 					decimalAdded = false;
-					
 					break;
-					
 					default:
-					
 					inputScreen.innerHTML += btnValue;
-					
 					decimalAdded = false;
-					
 					break;
-					
 				}
-				
 			});
-			
 		}
-		
 	}
-	
 		</script>
-		
 	</body>
-	
 </html>
